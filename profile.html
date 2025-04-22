@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Volunteer Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div id="message" class="fixed top-4 right-4 px-4 py-2 rounded-lg hidden transition-opacity duration-300 z-50"></div>
+    
+    <nav class="glass-effect shadow-lg fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <h1 class="text-xl font-bold text-gray-800">Volunteer Portal</h1>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="dashboard.html" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i class="fas fa-home mr-2"></i>Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="logoutBtn" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8 pt-24">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Profile Overview -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-xl shadow-lg p-6 profile-card animate-fade-in">
+                    <div class="text-center mb-6">
+                        <div id="profile-photo-container" class="relative w-32 h-32 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden group cursor-pointer">
+                            <img id="profile-photo" class="hidden object-cover w-full h-full" src="" alt="Profile Photo">
+                            <i id="default-photo-icon" class="fas fa-user text-blue-500 text-5xl"></i>
+                            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i class="fas fa-camera text-white text-2xl"></i>
+                            </div>
+                            <input type="file" id="profile-photo-input" class="hidden" accept="image/*">
+                        </div>
+                        <button id="upload-photo-btn" class="text-sm text-blue-600 hover:text-blue-800 font-medium mb-4">
+                            Update Photo
+                        </button>
+                        <h2 id="userName" class="text-2xl font-bold text-gray-800">Loading...</h2>
+                        <p id="userEmail" class="text-gray-600">Loading...</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-calendar-check text-blue-500 text-xl mr-3"></i>
+                            <div>
+                                <p class="text-gray-600">Member Since</p>
+                                <p id="memberSince" class="font-medium text-gray-800">Loading...</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-id-card text-green-500 text-xl mr-3"></i>
+                            <div>
+                                <p class="text-gray-600">Volunteer ID</p>
+                                <p id="volunteerId" class="font-medium text-gray-800">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Details -->
+            <div class="md:col-span-2">
+                <div class="bg-white rounded-xl shadow-lg p-6 profile-card animate-fade-in">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Profile Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-700 mb-4">Personal Details</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-600 mb-1">Full Name</label>
+                                    <p id="fullName" class="font-medium text-gray-800">Loading...</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-600 mb-1">Email Address</label>
+                                    <p id="email" class="font-medium text-gray-800">Loading...</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-600 mb-1">Phone Number</label>
+                                    <p id="phone" class="font-medium text-gray-800">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-700 mb-4">Volunteer Information</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-600 mb-1">Total Events</label>
+                                    <p id="totalEvents" class="font-medium text-gray-800">Loading...</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-600 mb-1">Total Hours</label>
+                                    <p id="totalHours" class="font-medium text-gray-800">Loading...</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-600 mb-1">Impact Score</label>
+                                    <p id="impactScore" class="font-medium text-gray-800">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificates Section -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mt-6 profile-card animate-fade-in">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Your Certificates</h2>
+                    <div id="certificatesList" class="space-y-4">
+                        <!-- Certificates will be loaded here -->
+                         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check session and load profile data
+        async function checkSession() {
+            try {
+                const response = await fetch('includes/check_session.php');
+                const data = await response.json();
+                if (!data.logged_in) {
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                console.error('Session check failed:', error);
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Profile photo handling
+        const profilePhotoContainer = document.getElementById('profile-photo-container');
+        const profilePhoto = document.getElementById('profile-photo');
+        const defaultPhotoIcon = document.getElementById('default-photo-icon');
+        const profilePhotoInput = document.getElementById('profile-photo-input');
+        const uploadPhotoBtn = document.getElementById('upload-photo-btn');
+        
+        // Setup photo upload click handlers
+        profilePhotoContainer.addEventListener('click', () => {
+            profilePhotoInput.click();
+        });
+        
+        uploadPhotoBtn.addEventListener('click', () => {
+            profilePhotoInput.click();
+        });
+        
+        // Handle file selection
+        profilePhotoInput.addEventListener('change', async (e) => {
+            if (e.target.files.length === 0) return;
+            
+            const file = e.target.files[0];
+            
+            // Check file type
+            if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
+                showMessage('Please select a JPEG, PNG, or GIF image.', 'error');
+                return;
+            }
+            
+            // Check file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                showMessage('File size exceeds the maximum limit (5MB).', 'error');
+                return;
+            }
+            
+            // Preview the selected image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                profilePhoto.src = e.target.result;
+                profilePhoto.classList.remove('hidden');
+                defaultPhotoIcon.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+            
+            // Upload the file
+            const formData = new FormData();
+            formData.append('profile_photo', file);
+            
+            try {
+                const response = await fetch('includes/upload_profile_photo.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Profile photo updated successfully!', 'success');
+                } else {
+                    showMessage(data.message || 'Failed to update profile photo.', 'error');
+                }
+            } catch (error) {
+                console.error('Error uploading profile photo:', error);
+                showMessage('An error occurred while uploading the photo.', 'error');
+            }
+        });
+        
+        function updateProfilePhoto(photoUrl) {
+            if (photoUrl) {
+                profilePhoto.src = photoUrl;
+                profilePhoto.classList.remove('hidden');
+                defaultPhotoIcon.classList.add('hidden');
+            } else {
+                profilePhoto.classList.add('hidden');
+                defaultPhotoIcon.classList.remove('hidden');
+            }
+        }
+
+        // Load user profile data
+        async function loadProfileData() {
+            try {
+                const response = await fetch('includes/get_profile.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update profile photo if exists
+                    if (data.user.profile_photo_url) {
+                        updateProfilePhoto(data.user.profile_photo_url);
+                    }
+                    
+                    // Update profile overview
+                    document.getElementById('userName').textContent = data.user.full_name;
+                    document.getElementById('userEmail').textContent = data.user.email;
+                    document.getElementById('memberSince').textContent = new Date(data.user.created_at).toLocaleDateString();
+                    document.getElementById('volunteerId').textContent = data.user.id;
+
+                    // Update personal details
+                    document.getElementById('fullName').textContent = data.user.full_name;
+                    document.getElementById('email').textContent = data.user.email;
+                    document.getElementById('phone').textContent = data.user.phone || 'Not provided';
+
+                    // Update volunteer information
+                    document.getElementById('totalEvents').textContent = data.stats.total_events;
+                    document.getElementById('totalHours').textContent = data.stats.total_hours;
+                    document.getElementById('impactScore').textContent = Math.round(data.stats.total_hours * 10);
+
+                    // Load certificates
+                    loadCertificates();
+                } else {
+                    throw new Error(data.message || 'Failed to load profile data');
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showMessage('Failed to load profile data. Please try again.', 'error');
+            }
+        }
+
+        // Load user certificates
+        async function loadCertificates() {
+            try {
+                const response = await fetch('includes/get_certificates.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const certificatesList = document.getElementById('certificatesList');
+                    
+                    if (data.certificates.length === 0) {
+                        certificatesList.innerHTML = `
+                            <div class="text-center py-8">
+                                <i class="fas fa-certificate text-4xl text-blue-300 mb-4"></i>
+                                <p class="text-gray-600 mb-2">No certificates yet</p>
+                                <p class="text-sm text-gray-500">Complete events to earn certificates and showcase your volunteer work!</p>
+                                <a href="dashboard.html" class="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                    Browse Events
+                                </a>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    certificatesList.innerHTML = data.certificates.map(cert => `
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-certificate text-blue-500 text-2xl mr-4"></i>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">${cert.event_title}</h3>
+                                    <p class="text-sm text-gray-600">Issued on ${new Date(cert.issue_date).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                            <a href="download_certificate.php?id=${cert.id}" 
+                               class="text-blue-500 hover:text-blue-600 font-medium">
+                                Download
+                            </a>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading certificates:', error);
+                const certificatesList = document.getElementById('certificatesList');
+                certificatesList.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-exclamation-circle text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-600">Unable to load certificates at this time</p>
+                        <p class="text-sm text-gray-500 mt-2">Please try again later</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Show message
+        function showMessage(message, type = 'error') {
+            const messageDiv = document.getElementById('message');
+            
+            if (type === 'error') {
+                messageDiv.className = 'fixed top-4 right-4 px-4 py-2 rounded-lg bg-red-100 text-red-800 z-50';
+            } else {
+                messageDiv.className = 'fixed top-4 right-4 px-4 py-2 rounded-lg bg-green-100 text-green-800 z-50';
+            }
+            
+            messageDiv.textContent = message;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('opacity-0');
+                setTimeout(() => {
+                    messageDiv.classList.add('hidden');
+                    messageDiv.classList.remove('opacity-0');
+                }, 300);
+            }, 3000);
+        }
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('includes/logout.php');
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = 'index.html';
+                } else {
+                    throw new Error(data.message || 'Logout failed');
+                }
+            } catch (error) {
+                console.error('Logout failed:', error);
+                showMessage('Failed to logout. Please try again.', 'error');
+            }
+        });
+
+        // Initialize profile page
+        document.addEventListener('DOMContentLoaded', () => {
+            checkSession();
+            loadProfileData();
+            
+            // Logout button functionality
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('includes/logout.php');
+                    const data = await response.json();
+                    if (data.success) {
+                        window.location.href = 'index.html';
+                    }
+                } catch (error) {
+                    console.error('Logout failed:', error);
+                    showMessage('Failed to logout. Please try again.', 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

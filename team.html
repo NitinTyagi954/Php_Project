@@ -1,0 +1,522 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Our Team - Volunteer Portal</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: '#1b3c59',
+                            'primary-dark': '#142d44',
+                            secondary: '#1b3c59',
+                            tertiary: '#1b3c59',
+                            background: '#eaf6fb',
+                            'border-light': '#d0e4f1',
+                            'hover-text': '#3498db'
+                        }
+                    }
+                }
+            }
+        </script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <style>
+            .stat-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                background: linear-gradient(135deg, #eaf6fb 0%, #d0e4f1 100%);
+                border: 1px solid #d0e4f1;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(208, 228, 241, 0.3);
+            }
+
+            .event-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                background: linear-gradient(135deg, #ffffff 0%, #eaf6fb 100%);
+                border: 1px solid #d0e4f1;
+            }
+
+            .event-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(208, 228, 241, 0.3);
+            }
+
+            .member-card {
+                transition: transform 0.2s ease;
+                background: linear-gradient(135deg, #f8fafc 0%, #eaf6fb 100%);
+                border: 1px solid #d0e4f1;
+            }
+
+            .member-card:hover {
+                transform: translateX(5px);
+                background: linear-gradient(135deg, #ffffff 0%, #eaf6fb 100%);
+            }
+
+            .glass-effect {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(234, 246, 251, 0.9) 100%);
+                backdrop-filter: blur(10px);
+                border: 1px solid #d0e4f1;
+            }
+            
+            .team-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                border: 3px solid #1b3c59;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            
+            .team-image:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(27, 60, 89, 0.4);
+            }
+            
+            .skill-badge {
+                transition: all 0.3s ease;
+            }
+            
+            .skill-badge:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            
+            .scroll-reveal {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+            
+            .scroll-reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        </style>
+    </head>
+    <body class="bg-gradient-to-br from-background to-white min-h-screen">
+        <!-- Header with hero section -->
+        <div class="relative bg-primary overflow-hidden">
+            <div class="absolute inset-0">
+                <div class="bg-gradient-to-r from-primary to-primary-dark absolute inset-0 opacity-75"></div>
+                <div class="absolute inset-0 bg-[url('https://cdnjs.cloudflare.com/ajax/libs/pattern.css/1.0.0/pattern.min.css')] opacity-10"></div>
+            </div>
+            
+            <nav class="bg-white shadow-lg fixed w-full z-10 border-b border-border-light">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center space-x-8">
+                            <div class="flex items-center">
+                                <i class="fas fa-hands-helping text-primary text-2xl mr-2"></i>
+                                <h1 class="text-xl font-bold text-tertiary">Volunteer Portal</h1>
+                            </div>
+                            <div class="hidden md:flex space-x-6">
+                                <a href="dashboard.html" class="text-tertiary hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-home mr-2"></i>Dashboard
+                                </a>
+                                <a href="dashboard.html#about" class="text-tertiary hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-info-circle mr-2"></i>About
+                                </a>
+                                <a href="team.html" class="text-tertiary border-b-2 border-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-users mr-2"></i>Our Team
+                                </a>
+                                <a href="dashboard.html#contact" class="text-tertiary hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-envelope mr-2"></i>Contact
+                                </a>
+                                <a href="dashboard.html#faq" class="text-tertiary hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-question-circle mr-2"></i>FAQ
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <button id="notificationBtn" class="text-tertiary hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-bell mr-2"></i>
+                                    <span class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">3</span>
+                                </button>
+                            </div>
+                            <button id="profileBtn" class="text-tertiary hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                <i class="fas fa-user mr-2"></i>Profile
+                            </button>
+                            <button id="logoutBtn" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="relative max-w-7xl mx-auto pt-24 pb-16 px-4">
+                <div class="text-center">
+                    <h1 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">Meet Our Team</h1>
+                    <p class="mt-6 max-w-2xl mx-auto text-xl text-white opacity-90">
+                        Passionate professionals working together to make a difference in our community.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 py-12 relative z-10 -mt-10">
+            <!-- Team Stats -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-12">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="stat-card rounded-lg p-4 text-center">
+                        <h3 class="text-3xl font-bold text-primary">4</h3>
+                        <p class="text-gray-600">Team Members</p>
+                    </div>
+                    <div class="stat-card rounded-lg p-4 text-center">
+                        <h3 class="text-3xl font-bold text-primary">50+</h3>
+                        <p class="text-gray-600">Projects Completed</p>
+                    </div>
+                    <div class="stat-card rounded-lg p-4 text-center">
+                        <h3 class="text-3xl font-bold text-primary">1+</h3>
+                        <p class="text-gray-600">Years Experience</p>
+                    </div>
+                    <div class="stat-card rounded-lg p-4 text-center">
+                        <h3 class="text-3xl font-bold text-primary">24/7</h3>
+                        <p class="text-gray-600">Support</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Team Filter -->
+            <div class="mb-8 flex flex-wrap items-center justify-between">
+                <h2 class="text-2xl font-bold text-tertiary mb-4 md:mb-0">Our Team Members</h2>
+                <div class="flex space-x-2">
+                    <button class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">All</button>
+                    <button class="bg-white hover:bg-gray-100 text-tertiary px-4 py-2 rounded-md text-sm font-medium transition-colors border border-gray-200">Developers</button>
+                    <button class="bg-white hover:bg-gray-100 text-tertiary px-4 py-2 rounded-md text-sm font-medium transition-colors border border-gray-200">Designers</button>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 - Ayush -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl scroll-reveal">
+                    <div class="bg-primary-dark text-white p-2 text-center">
+                        <span class="text-sm font-medium">Full Stack Developer</span>
+                    </div>
+                    <div class="p-6 text-center">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                            <img src="https://github.com/Ayush-Pandey0.png" alt="Ayush's profile picture" class="team-image">
+                        </div>
+                        <h3 class="text-xl font-semibold text-tertiary mb-2">Ayush Pandey</h3>
+                        <p class="text-gray-600 mb-4 italic">"Turning ideas into reality through code."</p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-4">
+                            <span class="skill-badge bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">React</span>
+                            <span class="skill-badge bg-green-100 text-green-600 px-2 py-1 rounded-full text-xs">Node.js</span>
+                            <span class="skill-badge bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs">MongoDB</span>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 transition-colors">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="https://github.com/Ayush-Pandey0" target="_blank" class="text-gray-700 hover:text-black transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600 transition-colors">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-3 flex justify-center">
+                        <button class="text-primary hover:text-primary-dark font-medium text-sm flex items-center transition-colors">
+                            <i class="fas fa-envelope mr-2"></i> Contact Me
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 - NITIN -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl scroll-reveal">
+                    <div class="bg-primary-dark text-white p-2 text-center">
+                        <span class="text-sm font-medium">Backend Developer</span>
+                    </div>
+                    <div class="p-6 text-center">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                            <img src="https://github.com/NitinTyagi954.png" alt="NITIN's profile picture" class="team-image">
+                        </div>
+                        <h3 class="text-xl font-semibold text-tertiary mb-2">Nitin Tyagi</h3>
+                        <p class="text-gray-600 mb-4 italic">"Building robust systems that scale."</p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-4">
+                            <span class="skill-badge bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full text-xs">Python</span>
+                            <span class="skill-badge bg-red-100 text-red-600 px-2 py-1 rounded-full text-xs">Java</span>
+                            <span class="skill-badge bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">SQL</span>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 transition-colors">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="https://github.com/NitinTyagi954" target="_blank" class="text-gray-700 hover:text-black transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600 transition-colors">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-3 flex justify-center">
+                        <button class="text-primary hover:text-primary-dark font-medium text-sm flex items-center transition-colors">
+                            <i class="fas fa-envelope mr-2"></i> Contact Me
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 - ANIKET -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl scroll-reveal">
+                    <div class="bg-primary-dark text-white p-2 text-center">
+                        <span class="text-sm font-medium">UI/UX Designer</span>
+                    </div>
+                    <div class="p-6 text-center">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                            <img src="https://github.com/AniketB26.png" alt="ANIKET's profile picture" class="team-image">
+                        </div>
+                        <h3 class="text-xl font-semibold text-tertiary mb-2">Aniket B</h3>
+                        <p class="text-gray-600 mb-4 italic">"Crafting beautiful user experiences."</p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-4">
+                            <span class="skill-badge bg-pink-100 text-pink-600 px-2 py-1 rounded-full text-xs">Figma</span>
+                            <span class="skill-badge bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full text-xs">Adobe XD</span>
+                            <span class="skill-badge bg-orange-100 text-orange-600 px-2 py-1 rounded-full text-xs">UI Design</span>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 transition-colors">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="https://github.com/AniketB26" target="_blank" class="text-gray-700 hover:text-black transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600 transition-colors">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-3 flex justify-center">
+                        <button class="text-primary hover:text-primary-dark font-medium text-sm flex items-center transition-colors">
+                            <i class="fas fa-envelope mr-2"></i> Contact Me
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team Member 4 - AKHAND -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl scroll-reveal">
+                    <div class="bg-primary-dark text-white p-2 text-center">
+                        <span class="text-sm font-medium">Frontend Developer</span>
+                    </div>
+                    <div class="p-6 text-center">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                            <img src="https://github.com/Akhand0ps.png" alt="AKHAND's profile picture" class="team-image">
+                        </div>
+                        <h3 class="text-xl font-semibold text-tertiary mb-2">Akhand Pratap Singh</h3>
+                        <p class="text-gray-600 mb-4 italic">"Creating responsive and modern interfaces."</p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-4">
+                            <span class="skill-badge bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full text-xs">JavaScript</span>
+                            <span class="skill-badge bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">React</span>
+                            <span class="skill-badge bg-teal-100 text-teal-600 px-2 py-1 rounded-full text-xs">Tailwind</span>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <a href="https://www.linkedin.com/in/akhand-pratap-singh-286770275/" class="text-blue-500 hover:text-blue-700 transition-colors">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="https://github.com/Akhand0ps" target="_blank" class="text-gray-700 hover:text-black transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="https:x.com/akhand_06x" class="text-blue-400 hover:text-blue-600 transition-colors">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-3 flex justify-center">
+                        <button class="text-primary hover:text-primary-dark font-medium text-sm flex items-center transition-colors">
+                            <i class="fas fa-envelope mr-2"></i> Contact Me
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Team Values Section -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold text-tertiary mb-8 text-center">Our Values</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-effect rounded-xl shadow-md p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl scroll-reveal">
+                        <div class="bg-primary rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-handshake text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-tertiary mb-2">Collaboration</h3>
+                        <p class="text-gray-600">We believe in the power of teamwork and bringing diverse perspectives together.</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl shadow-md p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl scroll-reveal">
+                        <div class="bg-primary rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-tertiary mb-2">Innovation</h3>
+                        <p class="text-gray-600">We constantly push boundaries and explore new technologies to create better solutions.</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl shadow-md p-6 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl scroll-reveal">
+                        <div class="bg-primary rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-heart text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-tertiary mb-2">Dedication</h3>
+                        <p class="text-gray-600">We are committed to delivering excellence in everything we do for our community.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA Section -->
+            <div class="mt-16 bg-gradient-to-r from-primary to-primary-dark rounded-xl shadow-lg p-8 text-center scroll-reveal">
+                <h2 class="text-2xl font-bold text-white mb-4">Join Our Team</h2>
+                <p class="text-white opacity-90 max-w-2xl mx-auto mb-6">
+                    We're always looking for talented individuals who share our passion and values.
+                    If you're interested in making a difference, we'd love to hear from you!
+                </p>
+                <button class="bg-white text-primary hover:bg-gray-100 px-6 py-3 rounded-md text-sm font-medium transition-colors">
+                    View Open Positions
+                </button>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="bg-white mt-16 border-t border-border-light">
+            <div class="max-w-7xl mx-auto py-8 px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-tertiary mb-4">Volunteer Portal</h3>
+                        <p class="text-gray-600">Making a difference together in our community.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-tertiary mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-primary">Home</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-primary">About</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-primary">Our Team</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-primary">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-tertiary mb-4">Connect With Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-600 hover:text-primary text-xl">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-primary text-xl">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-primary text-xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-primary text-xl">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-tertiary mb-4">Subscribe</h3>
+                        <form class="flex">
+                            <input type="email" placeholder="Your email" class="flex-grow px-4 py-2 border border-border-light rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-r-md hover:bg-primary-dark transition-colors">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="mt-8 pt-6 border-t border-border-light text-center">
+                    <p class="text-gray-600">© 2025 Volunteer Portal. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Check session and load data
+            async function checkSession() {
+                try {
+                    const response = await fetch('includes/check_session.php');
+                    const data = await response.json();
+                    if (!data.logged_in) {
+                        window.location.href = 'index.html';
+                    }
+                } catch (error) {
+                    console.error('Session check failed:', error);
+                    window.location.href = 'index.html';
+                }
+            }
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('includes/logout.php');
+                    const data = await response.json();
+                    if (data.success) {
+                        window.location.href = 'index.html';
+                    } else {
+                        throw new Error(data.message || 'Logout failed');
+                    }
+                } catch (error) {
+                    console.error('Logout failed:', error);
+                }
+            });
+
+            // Handle profile button
+            document.getElementById('profileBtn').addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+            
+            // Scroll animation
+            document.addEventListener('DOMContentLoaded', function() {
+                const scrollElements = document.querySelectorAll('.scroll-reveal');
+                
+                const elementInView = (el, scrollOffset = 100) => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    return (
+                        elementTop <= 
+                        (window.innerHeight || document.documentElement.clientHeight) - scrollOffset
+                    );
+                };
+                
+                const displayScrollElement = (element) => {
+                    element.classList.add('visible');
+                };
+                
+                const hideScrollElement = (element) => {
+                    element.classList.remove('visible');
+                };
+                
+                const handleScrollAnimation = () => {
+                    scrollElements.forEach((el) => {
+                        if (elementInView(el, 100)) {
+                            displayScrollElement(el);
+                        } else {
+                            hideScrollElement(el);
+                        }
+                    });
+                };
+                
+                window.addEventListener('scroll', () => {
+                    handleScrollAnimation();
+                });
+                
+                // Initialize on page load
+                handleScrollAnimation();
+            });
+            
+            // Notification dropdown
+            document.getElementById('notificationBtn').addEventListener('click', function() {
+                alert('You have 3 new notifications');
+            });
+
+            // Initialize page
+            checkSession();
+        </script>
+    </body>
+    </html>

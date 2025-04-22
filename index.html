@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
+    <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Admin Portal</h1>
+        
+        <p class="text-gray-700 mb-4">Welcome to the admin portal. This is a failsafe page.</p>
+        
+        <div class="space-y-4">
+            <a href="admin-dashboard.html" class="block w-full bg-blue-600 text-white py-2 px-4 rounded-md text-center hover:bg-blue-700">
+                Go to Admin Dashboard
+            </a>
+            
+            <a href="../index.html" class="block w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-center hover:bg-gray-300">
+                Return to Login
+            </a>
+        </div>
+        
+        <div class="mt-8 p-4 bg-yellow-50 rounded-md border border-yellow-200">
+            <h2 class="font-semibold text-yellow-800 mb-2">Troubleshooting Information</h2>
+            <p class="text-yellow-700 text-sm">
+                If you're seeing this page instead of being automatically redirected to the admin dashboard, 
+                there might be an issue with the file paths or server configuration.
+            </p>
+            <ul class="text-sm text-yellow-700 mt-2 list-disc pl-5">
+                <li>Try clicking the "Go to Admin Dashboard" button above</li>
+                <li>Make sure all PHP files are properly configured</li>
+                <li>Check server logs for any errors</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // This script will show directory contents to help diagnose path issues
+        fetch('test.php')
+            .then(response => response.text())
+            .then(data => {
+                console.log('Admin directory test results:', data);
+            })
+            .catch(err => {
+                console.error('Error testing admin directory:', err);
+            });
+    </script>
+</body>
+</html> 
